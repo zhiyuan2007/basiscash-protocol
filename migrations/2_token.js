@@ -6,6 +6,7 @@ const Cash = artifacts.require('Cash')
 const Bond = artifacts.require('Bond')
 const Share = artifacts.require('Share')
 const MockDai = artifacts.require('MockDai');
+const SimpleFund = artifacts.require('SimpleERCFund');
 
 // ============ Main Migration ============
 
@@ -21,6 +22,7 @@ async function deployToken(deployer, network, accounts) {
   await deployer.deploy(Cash);
   await deployer.deploy(Bond);
   await deployer.deploy(Share);
+  await deployer.deploy(SimpleFund)
 
   if (network !== 'mainnet') {
     const dai = await deployer.deploy(MockDai);

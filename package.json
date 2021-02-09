@@ -11,9 +11,11 @@
     "coverage": "hardhat coverage",
     "flatten": "truffle-flattener",
     "console:dev": "truffle console --network dev",
-    "deploy:dev": "truffle migrate --reset --network dev",
+    "deploy:dev": "truffle migrate  --network dev",
     "deploy:ropsten": "truffle migrate --network ropsten",
     "deploy:rinkeby": "truffle migrate --network rinkeby",
+    "deploy:hecotestnet": "truffle migrate --network hecotestnet",
+    "deploy:bsctestnet": "truffle migrate --network bsctestnet",
     "deploy:mainnet": "truffle migrate --network mainnet"
   },
   "devDependencies": {

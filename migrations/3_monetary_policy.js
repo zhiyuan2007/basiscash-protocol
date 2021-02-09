@@ -11,6 +11,7 @@ const MockDai = artifacts.require('MockDai');
 const Oracle = artifacts.require('Oracle')
 const Boardroom = artifacts.require('Boardroom')
 const Treasury = artifacts.require('Treasury')
+const SimpleFund = artifacts.require('SimpleERCFund');
 
 const UniswapV2Factory = artifacts.require('UniswapV2Factory');
 const UniswapV2Router02 = artifacts.require('UniswapV2Router02');
@@ -19,7 +20,7 @@ const DAY = 86400;
 
 async function migration(deployer, network, accounts) {
   let uniswap, uniswapRouter;
-  if (['dev'].includes(network)) {
+  if (['dev'].includes(network) || ['hecotestnet'].includes(network)|| ['bsctestnet'].includes(network)) {
     console.log('Deploying uniswap on dev network.');
     await deployer.deploy(UniswapV2Factory, accounts[0]);
     uniswap = await UniswapV2Factory.deployed();
@@ -43,6 +44,7 @@ async function migration(deployer, network, accounts) {
 
   const cash = await Cash.deployed();
   const share = await Share.deployed();
+  const fund = await SimpleFund.deployed();
 
   console.log('Approving Uniswap on tokens for liquidity');
   await Promise.all([
@@ -73,6 +75,8 @@ async function migration(deployer, network, accounts) {
     uniswap.address,
     cash.address,
     dai.address,
+    DAY,
+    POOL_START_DATE,
   );
 
   let startTime = POOL_START_DATE;
@@ -86,7 +90,9 @@ async function migration(deployer, network, accounts) {
     Bond.address,
     Share.address,
     Oracle.address,
+    Oracle.address,
     Boardroom.address,
+    fund.address,
     startTime,
   );
 }

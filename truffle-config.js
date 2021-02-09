@@ -18,11 +18,14 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+//const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".secret").toString().trim();
+console.log(mnemonic)
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+//var mnemonic = "";
 
 module.exports = {
   /**
@@ -42,13 +45,50 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    development: {
+    dev: {
       host: '127.0.0.1', // Localhost (default: none)
       port: 8545, // Standard Ethereum port (default: none)
-      network_id: '5777',
+      network_id: '31337',
       gasPrice: 50000000000,
       gas: 6721975, // Any network (default: none)
     },
+    ropsten: {
+      //provider: new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/e63c56fec0b34ce0b97b62b7460eb061"),
+      //network_id: 3,
+      //gas: 3012388,
+      //gasPrice: 30000000000
+     provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/e63c56fec0b34ce0b97b62b7460eb061`),
+     network_id: 3,       // Ropsten's id
+     gas: 6000000,        // Ropsten has a lower block limit than mainnet
+     gasPrice: 1000000000000,
+     confirmations: 1,    // # of confs to wait between deployments. (default: 0)
+     timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+     skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+
+    },
+    hecotestnet: {
+     provider: () => new HDWalletProvider(mnemonic, `wss://ws-testnet.hecochain.com`),
+     //provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/e63c56fec0b34ce0b97b62b7460eb061`),
+     network_id: 256,       // Ropsten's id
+     gas: 6000000,        // Ropsten has a lower block limit than mainnet
+     //gasPrice: 1000000000000,
+     confirmations: 1,    // # of confs to wait between deployments. (default: 0)
+     timeoutBlocks: 50,  // # of blocks before a deployment times out  (minimum/default: 50)
+     from: "0x9F8e8418E031923d13c0Bee63dB83C55F8785494",        // Account to send txs from (default: accounts[0])
+     websockets: true        // Enable EventEmitter interface for web3 (default: false)
+
+    },
+    "bsctestnet": {
+     provider: () => new HDWalletProvider(mnemonic, `https://data-seed-prebsc-1-s1.binance.org:8545/`),
+     //provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/e63c56fec0b34ce0b97b62b7460eb061`),
+     network_id: 97,       // Ropsten's id
+     gas: 6000000,        // Ropsten has a lower block limit than mainnet
+     //gasPrice: 1000000000000,
+     confirmations: 1,    // # of confs to wait between deployments. (default: 0)
+     timeoutBlocks: 80,  // # of blocks before a deployment times out  (minimum/default: 50)
+     from: "0x9F8e8418E031923d13c0Bee63dB83C55F8785494",        // Account to send txs from (default: accounts[0])
+     //websockets: true        // Enable EventEmitter interface for web3 (default: false)
+    }
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
